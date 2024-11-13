@@ -12,11 +12,8 @@ namespace Game10003
     {
         // Place your variables here:
         // Place your variables here:
-        Color daySky = new Color(0x7f, 0xa8, 0xb5);
-        Color nightSky = new Color(0x4c, 0x54, 0x9b);
-        Color sun = new Color(0xff, 0xfd, 0x95);
-        Color moon = new Color(0xfe, 0xfe, 0xfe);
-        Color clouds = new Color(0x78, 0x78, 0x9e);
+        Color background = new Color(0x00, 0x00, 0x00);
+        Color obstacle = new Color(0xfe, 0x01, 0x9a);
 
         float[] xaxis = [];
         float[] yaxis = [];
@@ -24,12 +21,12 @@ namespace Game10003
         float xCursor;
         float nightzone = 200;
 
-        Vector2 circleZone = new Vector2(300, 700);
+        Vector2 circleZone = new Vector2(300, 600);
         int radius = 10;
         float num1 = 0;
         float num2 = 0;
-        Vector2 circleBrick = new Vector2(50, 50);
-        int brickRadius = 10;
+        Vector2 circleBrick = new Vector2(80, 50);
+        int brickRadius = 20;
 
         /// <summary>
         ///     Setup runs once before the game loop begins.
@@ -39,8 +36,8 @@ namespace Game10003
             Window.SetTitle("Circle Break");
 
             Window.SetSize(600, 800);
-          
-           
+
+
         }
 
         /// <summary>
@@ -48,16 +45,50 @@ namespace Game10003
         /// </summary>
         public void Update()
         {
-            Window.ClearBackground(daySky);
+            Window.ClearBackground(background);
 
-                Draw.FillColor = Color.White;
-                Draw.Circle(circleZone, radius);
-            }
+            Draw.FillColor = Color.White;
+            Draw.Circle(circleZone, radius);
 
+            //Draw.FillColor = obstacle;
+            //Draw.Circle(circleBrick, brickRadius);
+
+            Draw.LineSize = 0;
+            Draw.FillColor = obstacle;
+            for (int i = 0; i < 2; i++)
+            {
+                int yoffset = i * 100;
            
+                for (int j = 0; j < 5; j++)
+                {
+                    int xoffset = j * 100;
+                    Draw.Circle(circleBrick.X + xoffset, circleBrick.Y + yoffset, brickRadius);
                 }
             }
-        
-    
+        }
+        /*
+        MakeCloud();
+
+        void MakeCloud()
+        {
+            Draw.LineSize = 0;
+            Draw.FillColor = clouds;
+            for (int i = 0; i < 2; i++)
+            {
+                int xoffset = i * 50;
+                Draw.Circle(100 + xoffset, 200, 35);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int xoffset = i * 50;
+                Draw.Circle(80 + xoffset, 230, 35);
+            }
+
+        } */
 
 
+
+
+
+    }
+}
