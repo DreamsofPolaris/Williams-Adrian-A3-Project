@@ -36,6 +36,7 @@ namespace Game10003
         float ballDirectionX = 3f;
         float ballDirectionY = -3f;
 
+        bool[] destroyedObstacle = new bool[10];
 
 
         /// <summary>
@@ -72,11 +73,16 @@ namespace Game10003
                 for (int j = 0; j < 5; j++)
                 {
                     int xoffset = j * 100;
-                    Draw.Circle(circleBrick.X + xoffset, circleBrick.Y + yoffset, brickRadius);
-                    if (Vector2.Distance(circleBrick, circleZone) <= brickRadius + radius)
+                    if (destroyedObstacle[i * 5 + j] == false)
                     {
-                        ballDirectionX = -ballDirectionX;
-                        ballDirectionY = -ballDirectionY;
+                        Draw.Circle(circleBrick.X + xoffset, circleBrick.Y + yoffset, brickRadius);
+
+                        if (Vector2.Distance(new Vector2(circleBrick.X + xoffset, circleBrick.Y + yoffset), circleZone) <= brickRadius + radius)
+                        {
+                            destroyedObstacle[i * 5 + j] = true;
+                            ballDirectionX = -ballDirectionX;
+                            ballDirectionY = -ballDirectionY;
+                        }
                     }
                 }
             }
