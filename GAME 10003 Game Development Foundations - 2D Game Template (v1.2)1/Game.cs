@@ -28,6 +28,16 @@ namespace Game10003
         Vector2 circleBrick = new Vector2(80, 50);
         int brickRadius = 20;
 
+        Vector2 bumperZone = new Vector2(300, 620);
+        Vector2 bumperSize = new Vector2(200, 25);
+        Vector2 zone = Input.GetMousePosition();
+
+        Vector2 ballLastPosition;
+            float ballDirectionX = 3;
+        float ballDirectionY = -3;
+
+
+
         /// <summary>
         ///     Setup runs once before the game loop begins.
         /// </summary>
@@ -65,6 +75,13 @@ namespace Game10003
                     Draw.Circle(circleBrick.X + xoffset, circleBrick.Y + yoffset, brickRadius);
                 }
             }
+            Draw.FillColor = obstacle;
+            Draw.Rectangle(Input.GetMouseX() - 100, bumperZone.Y, bumperSize.X, bumperSize.Y);
+        }
+
+        public void ballCollision()
+        {
+
         }
         /*
         MakeCloud();
