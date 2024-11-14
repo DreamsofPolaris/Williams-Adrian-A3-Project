@@ -28,13 +28,13 @@ namespace Game10003
         Vector2 circleBrick = new Vector2(80, 50);
         int brickRadius = 20;
 
-        Vector2 bumperZone = new Vector2(300, 610);
+        Vector2 bumperZone = new Vector2(300, 615);
         Vector2 bumperSize = new Vector2(200, 25);
         Vector2 zone = Input.GetMousePosition();
 
         Vector2 ballLastPosition;
-        float ballDirectionX = 3;
-        float ballDirectionY = -3;
+        float ballDirectionX = 3f;
+        float ballDirectionY = -3f;
 
 
 
@@ -73,15 +73,25 @@ namespace Game10003
                 {
                     int xoffset = j * 100;
                     Draw.Circle(circleBrick.X + xoffset, circleBrick.Y + yoffset, brickRadius);
+                    if (Vector2.Distance(circleBrick, circleZone) <= brickRadius + radius)
+                    {
+                        ballDirectionX = -ballDirectionX;
+                        ballDirectionY = -ballDirectionY;
+                    }
                 }
             }
+
+
             Draw.FillColor = obstacle;
             Draw.Rectangle(Input.GetMouseX() - 100, bumperZone.Y, bumperSize.X, bumperSize.Y);
 
-            ballCollision();
+            
 
             circleZone.Y += ballDirectionY;
             circleZone.X += ballDirectionX;
+
+            ballCollision();
+            bumperCollision();
         }
 
         public void ballCollision()
@@ -92,61 +102,75 @@ namespace Game10003
             bool pastLeft = circleZone.X - radius <= 0;
             bool pastRight = circleZone.X + radius >= Window.Width;
 
-            if (pastBottom)
+            if (pastBottom == true)
             {
-                ballDirectionY = -3;
+                ballDirectionY = -3f;
                 circleZone.Y = Window.Height - radius;
             }
-            else if (pastTop)
+            else if (pastTop == true)
             {
-                ballDirectionY = 3;
+                ballDirectionY = 3f;
                 circleZone.Y = 0 + radius;
             }
-            else if (pastLeft)
+            else if (pastLeft == true)
             {
-                ballDirectionX = 3;
+                ballDirectionX = 3f;
                 circleZone.X = 0 + radius;
             }
-            else if (pastRight)
+            else if (pastRight == true)
             {
-                ballDirectionX = -3;
+                ballDirectionX = -3f;
                 circleZone.X = Window.Width - radius;
             }
         }
-            public void bumperCollision()
-            {
-                bool bumperTop = circleZone.Y + radius >= 610;
+        public void bumperCollision()
+        {
+            bool bumperTop = 620 >= circleZone.Y + radius && circleZone.Y + radius >= 615;
 
-                if (bumperTop == true)
+            if (bumperTop == true && Input.GetMouseX() - 100 <= circleZone.X && circleZone.X <= Input.GetMouseX() + 100)
                 {
                     ballDirectionY = -3;
-                    circleZone.Y = Window.Height - radius;
+                    circleZone.Y = bumperZone.Y - radius;
+                    
                 }
                
                 }
-                /*
-                MakeCloud();
 
-                void MakeCloud()
-                {
-                    Draw.LineSize = 0;
-                    Draw.FillColor = clouds;
-                    for (int i = 0; i < 2; i++)
-                    {
-                        int xoffset = i * 50;
-                        Draw.Circle(100 + xoffset, 200, 35);
-                    }
-                    for (int i = 0; i < 3; i++)
-                    {
-                        int xoffset = i * 50;
-                        Draw.Circle(80 + xoffset, 230, 35);
-                    }
+        public void obstacleCollision()
+        {
+            bool bumperTop = 620 >= circleZone.Y + radius && circleZone.Y + radius >= 615;
 
-                } */
-
-
-
-
+            if (bumperTop == true && Input.GetMouseX() - 100 <= circleZone.X && circleZone.X <= Input.GetMouseX() + 100)
+            {
+                ballDirectionY = -3;
+                circleZone.Y = bumperZone.Y - radius;
 
             }
+
+        }
+        /*
+        MakeCloud();
+
+        void MakeCloud()
+        {
+            Draw.LineSize = 0;
+            Draw.FillColor = clouds;
+            for (int i = 0; i < 2; i++)
+            {
+                int xoffset = i * 50;
+                Draw.Circle(100 + xoffset, 200, 35);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int xoffset = i * 50;
+                Draw.Circle(80 + xoffset, 230, 35);
+            }
+
+        } */
+
+
+
+
+
+    }
     }
